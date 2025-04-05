@@ -25,13 +25,11 @@ env:
     src-git routing https://git.openwrt.org/feed/routing.git^24
     src-git telephony https://git.openwrt.org/feed/telephony.git^24
   CONFIG_FILE: .config
-  DIY_P1_SH: >
-    echo "=== 开始 R2S 定制编译 ==="
+  DIY_P1_SH: |
+    echo "=== 验证配置 ==="
+    grep "friendlyarm_nanopi-r2s" .config || { echo "❌ 设备配置未生效"; exit 1; }
     ./scripts/feeds update -a
     ./scripts/feeds install -a
-    cp $GITHUB_WORKSPACE/.config .config
-    echo "CONFIG_TARGET_ROOTFS_PARTSIZE=1024" >> .config  # 调整根分区大小
-    export DISABLE_SIGNATURE_CHECK=1
     make defconfig
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
