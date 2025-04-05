@@ -32,6 +32,7 @@ env:
     cp $GITHUB_WORKSPACE/.config .config
     make defconfig
     echo "CONFIG_TARGET_ROOTFS_PARTSIZE=1024" >> .config  # 调整根分区大小
+    export DISABLE_SIGNATURE_CHECK=1
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
