@@ -17,11 +17,21 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
+  REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_BRANCH: openwrt-24.04
+  FEEDS_CONF: |
+    src-git packages https://git.openwrt.org/feed/packages.git^24
+    src-git luci https://git.openwrt.org/project/luci.git^24
+    src-git routing https://git.openwrt.org/feed/routing.git^24
+    src-git telephony https://git.openwrt.org/feed/telephony.git^24
   CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
+  DIY_P1_SH: >
+    echo "=== 开始 R2S 定制编译 ==="
+    ./scripts/feeds update -a
+    ./scripts/feeds install -a
+    cp $GITHUB_WORKSPACE/.config .config
+    make defconfig
+    echo "CONFIG_TARGET_ROOTFS_PARTSIZE=1024" >> .config  # 调整根分区大小
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
