@@ -16,9 +16,8 @@
 # Add a feed source
 #echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
-DIY_P1_SH: |
-  echo "=== 验证配置 ==="
-  grep "friendlyarm_nanopi-r2s" .config || { echo "❌ 设备配置未生效"; exit 1; }
-  ./scripts/feeds update -a
-  ./scripts/feeds install -a
-  make defconfig
+#!/bin/bash
+# 添加自定义 feeds 源
+echo 'src-git helloworld https://github.com/fw876/helloworld' >> feeds.conf.default
+echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >> feeds.conf.default
+
