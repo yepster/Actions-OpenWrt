@@ -18,3 +18,18 @@
 
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+#!/bin/bash
+# 修改默认 IP 地址
+sed -i 's/192.168.1.1/192.168.123.1/g' package/base-files/files/bin/config_generate
+
+# 修改主机名
+sed -i 's/ImmortalWrt/MyRouter/g' package/base-files/files/bin/config_generate
+
+# 设置时区
+sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
+
+# 添加自定义主题（以 luci-theme-argon 为例）
+git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+
+# 删除默认主题（可选，根据需要）
+# rm -rf package/feeds/luci/luci-theme-bootstrap
